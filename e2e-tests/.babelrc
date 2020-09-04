@@ -1,0 +1,18 @@
+{
+    "presets": [
+      "@babel/preset-typescript",
+      [
+        "@babel/preset-env",
+        {
+          "shippedProposals": true,
+          "modules": "commonjs",
+          "useBuiltIns": "usage",
+          "debug": false,
+          "targets": { "node": "current" },
+          "corejs": 3
+        }
+      ]
+    ],
+    "plugins": ["@babel/plugin-transform-runtime"]
+  }
+  
