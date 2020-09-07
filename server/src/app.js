@@ -3,6 +3,10 @@ const app = express();
 
 const port = 3000;
 
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
@@ -10,11 +14,28 @@ app.get('/', (req, res) => {
 });
 
 app.get('/foo', (req, res) => {
-  res.redirect(307, '/bar')
+  delay(2000).then(() => {
+    res.redirect(307, '/secondJump')
+  })
+});
+
+app.get('/secondJump', (req, res) => {
+  delay(2000).then(() => {
+    res.redirect(307, '/thirdJump')
+  })
+});
+
+app.get('/thirdJump', (req, res) => {
+  delay(2000).then(() => {
+    res.redirect(307, '/bar')
+  })
 });
 
 app.get('/bar', (req, res) => {
-  res.send('Hello, you are on /bar!');
+  delay(5000).then(() => {
+    res.send('Hello, you are on /bar!');
+  })
+  
 });
 
 app.listen(port, () => {
